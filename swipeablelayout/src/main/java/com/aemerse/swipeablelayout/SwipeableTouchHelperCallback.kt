@@ -1,8 +1,8 @@
-package com.limerse.swipeablelayout
+package com.aemerse.swipeablelayout
 
 import android.graphics.Canvas
 import androidx.recyclerview.widget.RecyclerView
-import com.limerse.swipeablelayout.touchelper.ItemTouchHelper
+import com.aemerse.swipeablelayout.touchelper.ItemTouchHelper
 import kotlin.math.max
 
 class SwipeableTouchHelperCallback(private val onItemSwiped: OnItemSwiped) :

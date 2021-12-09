@@ -1,4 +1,4 @@
-package com.limerse.swipeablelayout
+package com.aemerse.swipeablelayout
 
 interface OnItemSwiped {
     fun onItemSwiped()

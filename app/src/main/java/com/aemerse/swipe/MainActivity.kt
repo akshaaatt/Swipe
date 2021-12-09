@@ -1,4 +1,4 @@
-package com.limerse.swipe
+package com.aemerse.swipe
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

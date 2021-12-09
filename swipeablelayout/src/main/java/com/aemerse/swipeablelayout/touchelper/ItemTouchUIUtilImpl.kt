@@ -1,11 +1,11 @@
-package com.limerse.swipeablelayout.touchelper
+package com.aemerse.swipeablelayout.touchelper
 
 import android.graphics.Canvas
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.ItemTouchUIUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.limerse.swipeablelayout.R
+import com.aemerse.swipeablelayout.R
 
 /**
  * Package private class to keep implementations. Putting them inside ItemTouchUIUtil makes them

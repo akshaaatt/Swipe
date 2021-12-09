@@ -1,4 +1,4 @@
-package com.limerse.swipeablelayout
+package com.aemerse.swipe
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.limerse.swipeablelayout.test", appContext.packageName)
+        assertEquals("com.aemerse.swipe", appContext.packageName)
     }
 }

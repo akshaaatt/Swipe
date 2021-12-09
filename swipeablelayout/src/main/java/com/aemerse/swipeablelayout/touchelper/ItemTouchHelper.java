@@ -1,4 +1,4 @@
-package com.limerse.swipeablelayout.touchelper;
+package com.aemerse.swipeablelayout.touchelper;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -22,8 +22,8 @@ import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.ItemTouchUIUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.limerse.swipeablelayout.R;
-import com.limerse.swipeablelayout.SwipeableTouchHelperCallback;
+import com.aemerse.swipeablelayout.R;
+import com.aemerse.swipeablelayout.SwipeableTouchHelperCallback;
 
 import java.util.ArrayList;
 import java.util.List;

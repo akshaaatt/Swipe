@@ -1,4 +1,4 @@
-package com.limerse.swipeablelayout
+package com.aemerse.swipeablelayout
 
 import org.junit.Test
 

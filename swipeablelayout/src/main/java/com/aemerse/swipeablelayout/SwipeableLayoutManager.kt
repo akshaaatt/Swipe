@@ -1,4 +1,4 @@
-package com.limerse.swipeablelayout
+package com.aemerse.swipeablelayout
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
