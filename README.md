@@ -20,16 +20,10 @@
 <p align="center">
   <a href="#features">Features</a> •
   <a href="#development">Development</a> •
-  <a href="#usage">Usage</a> •
   <a href="#license">License</a> •
   <a href="#contribution">Contribution</a>
 </p>
-
-<h1 align="center">
-  <br>
-  <a href="https://github.com/akshaaatt/Swipe/archive/master.zip"><img src="https://i.postimg.cc/wMCccWJH/4910241.jpg" alt="Swipe"></a>
-</h1>
-	    
+   
 ---
 
 Android Library supporting features like Swipeable Layout.
