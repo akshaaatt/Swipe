@@ -4,28 +4,30 @@ import android.graphics.Canvas
 import androidx.recyclerview.widget.RecyclerView
 import com.aemerse.swipeablelayout.touchelper.ItemTouchHelper
 import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.sqrt
 
 class SwipeableTouchHelperCallback(private val onItemSwiped: OnItemSwiped) :
     ItemTouchHelper.Callback() {
-    val allowedSwipeDirectionsMovementFlags: Int get() = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+    private val allowedSwipeDirectionsMovementFlags: Int get() = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
 
     fun getAllowedSwipeDirectionsMovementFlags(viewHolder: RecyclerView.ViewHolder?): Int {
         return allowedSwipeDirectionsMovementFlags
     }
 
-    fun getAllowedDirectionsMovementFlags(holder: RecyclerView.ViewHolder?): Int {
+    private fun getAllowedDirectionsMovementFlags(holder: RecyclerView.ViewHolder?): Int {
         return allowedDirectionsMovementFlags
     }
 
-    val allowedDirectionsMovementFlags: Int get() = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT or ItemTouchHelper.UP or ItemTouchHelper.DOWN
+    private val allowedDirectionsMovementFlags: Int get() = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT or ItemTouchHelper.UP or ItemTouchHelper.DOWN
 
     override fun getMovementFlags(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder
+        recyclerView: RecyclerView?,
+        viewHolder: RecyclerView.ViewHolder?
     ): Int {
         return makeMovementFlags(
             0,
-            if (viewHolder.adapterPosition != 0) 0 else getAllowedDirectionsMovementFlags(viewHolder)
+            if (viewHolder!!.adapterPosition != 0) 0 else getAllowedDirectionsMovementFlags(viewHolder)
         )
     }
 
@@ -34,13 +36,14 @@ class SwipeableTouchHelperCallback(private val onItemSwiped: OnItemSwiped) :
     }
 
     override fun onMove(
-        recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
+        recyclerView: RecyclerView?,
+        viewHolder: RecyclerView.ViewHolder?,
+        target: RecyclerView.ViewHolder?
     ): Boolean {
         return false
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
         val allowedSwipeDirections = getAllowedSwipeDirectionsMovementFlags(viewHolder)
         if (direction == ItemTouchHelper.LEFT && allowedSwipeDirections and ItemTouchHelper.LEFT != 0) {
             onItemSwiped.onItemSwipedLeft()
@@ -61,10 +64,10 @@ class SwipeableTouchHelperCallback(private val onItemSwiped: OnItemSwiped) :
             onItemSwiped.onItemSwipedDown()
             onItemSwiped.onItemSwiped()
         }
-        viewHolder.itemView.invalidate()
+        viewHolder!!.itemView.invalidate()
     }
 
-    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
+    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder?): Float {
         return 0.5f
     }
 
@@ -76,20 +79,24 @@ class SwipeableTouchHelperCallback(private val onItemSwiped: OnItemSwiped) :
     }
 
     override fun onChildDraw(
-        c: Canvas, recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int,
+        c: Canvas?,
+        recyclerView: RecyclerView?,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float,
+        dY: Float,
+        actionState: Int,
         isCurrentlyActive: Boolean
     ) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-        val swipValue = Math.sqrt((dX * dX + dY * dY).toDouble())
+        val swipValue = sqrt((dX * dX + dY * dY).toDouble())
         var fraction = swipValue / getThreshold(viewHolder)
-        fraction = Math.min(1.0, fraction)
+        fraction = min(1.0, fraction)
         if (viewHolder is OnItemSwipePercentageListener) {
             (viewHolder as OnItemSwipePercentageListener).onItemSwipePercentage(
-                Math.max(-1f, Math.min(1f, dX / recyclerView.measuredWidth)).toDouble()
+                max(-1f, min(1f, dX / recyclerView!!.measuredWidth)).toDouble()
             )
         }
-        val swipeableLayoutManager = recyclerView.layoutManager as SwipeableLayoutManager?
+        val swipeableLayoutManager = recyclerView!!.layoutManager as SwipeableLayoutManager?
         val childCount = recyclerView.childCount
         if (viewHolder.adapterPosition == 0) {
             viewHolder.itemView.rotation = swipeableLayoutManager!!.angle * (dX / recyclerView.measuredWidth)
@@ -100,8 +107,8 @@ class SwipeableTouchHelperCallback(private val onItemSwiped: OnItemSwiped) :
             val child = recyclerView.getChildAt(i)
             val level = childCount - i - 1
             if (level > 0) {
-                val scale = Math.max(
-                    0f, Math.min(
+                val scale = max(
+                    0f, min(
                         1f,
                         (1 - swipeableLayoutManager!!.scaleGap * level
                                 + fraction * swipeableLayoutManager.scaleGap).toFloat()
@@ -119,7 +126,7 @@ class SwipeableTouchHelperCallback(private val onItemSwiped: OnItemSwiped) :
         }
     }
 
-    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+    override fun clearView(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
         viewHolder.itemView.rotation = 0f
         viewHolder.itemView.scaleX = 1f
